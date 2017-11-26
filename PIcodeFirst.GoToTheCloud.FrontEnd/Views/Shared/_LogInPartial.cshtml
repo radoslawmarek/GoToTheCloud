@@ -1,11 +1,17 @@
 ﻿@using System.Security.Principal
+@using System.Security.Claims
+
+@{ 
+    var claims = ((ClaimsIdentity)User.Identity).Claims;
+    var userName = claims.FirstOrDefault(c => c.Type == "name")?.Value ?? string.Empty;
+}
 
 @if (User.Identity.IsAuthenticated)
 {
     <text>
     <ul class="nav navbar-nav navbar-right">
         <li class="navbar-text">
-            Witaj, @User.Identity.Name
+            Witaj, @userName
         </li>
         <li>
             <a asp-area="" asp-controller="Account" asp-action="SignOut">Wyloguj</a>

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using System.Globalization;
 using PIcodeFirst.GoToTheCloud.FrontEnd.Authentication;
 using Microsoft.Extensions.Configuration;
+using PIcodeFirst.GoToTheCloud.FrontEnd.Authorization;
 
 namespace PIcodeFirst.GoToTheCloud.FrontEnd
 {
@@ -28,6 +29,7 @@ namespace PIcodeFirst.GoToTheCloud.FrontEnd
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -36,6 +38,9 @@ namespace PIcodeFirst.GoToTheCloud.FrontEnd
             })
             .AddAzureAdAuthentication(options => Configuration.Bind("AzureAd", options))
             .AddCookie();
+
+            services.Configure<AzureAdGroupsOptions>(Configuration.GetSection("AdGroups"));
+            services.AddSingleton<AuthorizationService>();
 
             services.AddMvc();
                 
