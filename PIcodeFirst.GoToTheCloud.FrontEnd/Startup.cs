@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using System.Globalization;
-using PIcodeFirst.GoToTheCloud.FrontEnd.Authentication;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using PIcodeFirst.GoToTheCloud.FrontEnd.Authentication;
 using PIcodeFirst.GoToTheCloud.FrontEnd.Authorization;
+using PIcodeFirst.GoToTheCloud.FrontEnd.Configuration;
+using PICodeFirst.GoToTheCloud.App.Configurations;
+using PICodeFirst.GoToTheCloud.App.TravelModel;
+using PICodeFirst.GoToTheCloud.Infrastructure.Db;
+using System;
 
 namespace PIcodeFirst.GoToTheCloud.FrontEnd
 {
@@ -40,19 +40,25 @@ namespace PIcodeFirst.GoToTheCloud.FrontEnd
             .AddCookie();
 
             services.Configure<AzureAdGroupsOptions>(Configuration.GetSection("AdGroups"));
-            services.AddSingleton<AuthorizationService>();
+            //services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            //var connectionStringsOptions = Configuration.GetSection("ConnectionStrings");
+            services.AddSingleton<ConnectionStrings>(Configuration.GetConnectionStrings());
+
+            services.AddTransient<ITravelRepository, SqlTravelRepository>();
 
             services.AddMvc();
                 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            ClaimsPrincipalExtensions.SetAzureAdGroupOptions(serviceProvider.GetService<IOptions<AzureAdGroupsOptions>>().Value);
 
             app.UseStaticFiles();
             app.UseAuthentication();

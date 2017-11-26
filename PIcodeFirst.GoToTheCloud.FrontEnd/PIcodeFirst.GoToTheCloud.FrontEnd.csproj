@@ -14,4 +14,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PICodeFirst.GoToTheCloud.App\PICodeFirst.GoToTheCloud.App.csproj" />
+    <ProjectReference Include="..\PICodeFirst.GoToTheCloud.Infrastructure\PICodeFirst.GoToTheCloud.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIcodeFirst.GoToTheCloud.FrontEnd", "PIcodeFirst.GoToTheCloud.FrontEnd\PIcodeFirst.GoToTheCloud.FrontEnd.csproj", "{4C9C2B4F-29A4-458F-BD48-5593AEEA54F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIcodeFirst.GoToTheCloud.FrontEnd", "PIcodeFirst.GoToTheCloud.FrontEnd\PIcodeFirst.GoToTheCloud.FrontEnd.csproj", "{4C9C2B4F-29A4-458F-BD48-5593AEEA54F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PICodeFirst.GoToTheCloud.App", "PICodeFirst.GoToTheCloud.App\PICodeFirst.GoToTheCloud.App.csproj", "{B94231BC-E67A-4967-BF79-80F36A2E8DFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EA676F84-7E0E-4A02-A5D3-D940F332BCC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PICodeFirst.GoToTheCloud.Infrastructure", "PICodeFirst.GoToTheCloud.Infrastructure\PICodeFirst.GoToTheCloud.Infrastructure.csproj", "{04928AC8-2D45-48FF-9AD0-57637BE8EC4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,14 @@ Global
 		{4C9C2B4F-29A4-458F-BD48-5593AEEA54F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C9C2B4F-29A4-458F-BD48-5593AEEA54F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C9C2B4F-29A4-458F-BD48-5593AEEA54F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B94231BC-E67A-4967-BF79-80F36A2E8DFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B94231BC-E67A-4967-BF79-80F36A2E8DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B94231BC-E67A-4967-BF79-80F36A2E8DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B94231BC-E67A-4967-BF79-80F36A2E8DFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04928AC8-2D45-48FF-9AD0-57637BE8EC4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04928AC8-2D45-48FF-9AD0-57637BE8EC4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04928AC8-2D45-48FF-9AD0-57637BE8EC4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04928AC8-2D45-48FF-9AD0-57637BE8EC4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

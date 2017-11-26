@@ -289,3 +289,4 @@ __pycache__/
 
 
 **/wwwroot/*
+**/appsettings.json
