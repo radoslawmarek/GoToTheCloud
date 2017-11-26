@@ -1,0 +1,31 @@
+{
+  "name": "go-to-the-cloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "PICodeFirst (Radoslaw Marek)",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "bootstrap-loader": "^2.2.0",
+    "bootstrap-sass": "^3.3.7",
+    "css-loader": "^0.28.7",
+    "exports-loader": "^0.6.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
+    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-template": "^6.1.0",
+    "node-sass": "^4.7.2",
+    "resolve-url-loader": "^2.2.0",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.0",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.8.1"
+  }
+}

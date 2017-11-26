@@ -1,10 +1,21 @@
 ﻿@using System.Security.Principal
 
-@if(User.Identity.IsAuthenticated)
+@if (User.Identity.IsAuthenticated)
 {
-    <span><a asp-area="" asp-controller="Account" asp-action="SignOut">Wyloguj</a></span>
+    <text>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="navbar-text">
+            Witaj, @User.Identity.Name
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Account" asp-action="SignOut">Wyloguj</a>
+        </li>
+    </ul>
+    </text>
 }
 else
 {
-    <span><a asp-area="" asp-controller="Account" asp-action="SignIn">Zaloguj</a></span>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-area="" asp-controller="Account" asp-action="SignIn">Zaloguj</a></li>
+    </ul>
 }
