@@ -1,0 +1,10 @@
+﻿@using System.Security.Principal
+
+@if(User.Identity.IsAuthenticated)
+{
+    <span><a asp-area="" asp-controller="Account" asp-action="SignOut">Wyloguj</a></span>
+}
+else
+{
+    <span><a asp-area="" asp-controller="Account" asp-action="SignIn">Zaloguj</a></span>
+}
