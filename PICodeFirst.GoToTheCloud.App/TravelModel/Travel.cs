@@ -7,6 +7,7 @@ namespace PICodeFirst.GoToTheCloud.App.TravelModel
     public class Travel
     {
         public Guid Id { get; set; }
+        public string Description { get; set; }
         public DateTime Start { get; set; }
         public DateTime Finish { get; set; }
         public Location From { get; set; }

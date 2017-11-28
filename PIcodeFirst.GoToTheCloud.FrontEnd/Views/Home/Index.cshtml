@@ -1,7 +1,17 @@
-﻿
+﻿@model TravelsViewModel
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+@if (!@Model.IsAuthenticated)
+{
+    <h2>You must be logged in to see the content!</h2>
+}
+else
+{
+    @Html.Partial("_TravelListPartial", Model)
+}
+
+
 

@@ -1,51 +1,63 @@
 ﻿using PICodeFirst.GoToTheCloud.App.Configurations;
 using PICodeFirst.GoToTheCloud.App.TravelModel;
 using PICodeFirst.GoToTheCloud.App.UserModel;
+using PICodeFirst.GoToTheCloud.Infrastructure.Db.Sql;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace PICodeFirst.GoToTheCloud.Infrastructure.Db
 {
-    public class SqlTravelRepository : ITravelRepository
+    public class SqlTravelRepository : SqlRepositoryBase, ITravelRepository
     {
-        private readonly ConnectionStrings _connectionStrings;
-
-        public SqlTravelRepository(ConnectionStrings connectionStrings )
+        public SqlTravelRepository(ConnectionStrings connectionStrings ) : base(connectionStrings)
         {
-            _connectionStrings = connectionStrings;
+            
         }
 
         public IEnumerable<Travel> GetTravelList(User user)
         {
             var result = new List<Travel>();
 
-            result.Add(new Travel()
+            using (var connection = GetConnection())
             {
-                Id = Guid.NewGuid(),
-                Start = DateTime.Now.AddDays(-14),
-                Finish = DateTime.Now.AddDays(-7),
-                From = new Location() { Name = "Gdańsk" },
-                To = new Location() {  Name = "Warszawa" }
-            });
+                var command = new SqlCommand();
+                command.Connection = connection;
 
-            result.Add(new Travel()
-            {
-                Id = Guid.NewGuid(),
-                Start = DateTime.Now.AddDays(-14),
-                Finish = DateTime.Now.AddDays(-7),
-                From = new Location() { Name = "Gdańsk" },
-                To = new Location() { Name = "Warszawa" }
-            });
+                if (user.IsApplicationAdministrator)
+                {
+                    command.CommandText = SqlTravelRepositoryQueries.GetTravelList;
+                }
+                else
+                {
+                    command.CommandText = SqlTravelRepositoryQueries.GetTravelListForUser;
+                    command.Parameters.AddWithValue("user_id", user.Name);
+                }
 
-            result.Add(new Travel()
-            {
-                Id = Guid.NewGuid(),
-                Start = DateTime.Now.AddDays(-14),
-                Finish = DateTime.Now.AddDays(-7),
-                From = new Location() { Name = "Gdańsk" },
-                To = new Location() { Name = "Warszawa" }
-            });
+                using (var reader = command.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        result.Add(new Travel()
+                        {
+                            Description = reader.GetStringOrDefault("description"),
+                            Start = reader.GetDateTimeOrDefault("start"),
+                            Finish = reader.GetDateTimeOrDefault("finish"),
+                            From = new Location()
+                            {
+                                Id = reader.GetGuidOrDefault("location_from_id"),
+                                Name = reader.GetStringOrDefault("location_from_name")
+                            },
+                            To = new Location()
+                            {
+                                Id = reader.GetGuidOrDefault("location_to_id"),
+                                Name = reader.GetStringOrDefault("location_to_name")
+                            }
+                        });
+                    }
+                }
+            }
 
             return result;
         }
