@@ -8,5 +8,7 @@ namespace PICodeFirst.GoToTheCloud.App.TravelModel
     public interface ITravelRepository
     {
         IEnumerable<Travel> GetTravelList(User user);
+        IEnumerable<Location> GetAllLocations();
+        void AddTravel(Travel travel, User user);
     }
 }

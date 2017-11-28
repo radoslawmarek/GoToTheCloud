@@ -61,6 +61,26 @@ namespace PICodeFirst.GoToTheCloud.Infrastructure.Db.Sql {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO Travels (id, description, start, finish, user_id, location_from_id, location_to_id)
+        ///VALUES (@id, @description, @start, @finish, @user_id, @location_from_id, @location_to_id).
+        /// </summary>
+        internal static string AddTravel {
+            get {
+                return ResourceManager.GetString("AddTravel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT id, name FROM Locations
+        ///ORDER BY NAME ASC.
+        /// </summary>
+        internal static string GetLocations {
+            get {
+                return ResourceManager.GetString("GetLocations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT t.id, 
         ///	t.description,
         ///	t.start,
@@ -73,7 +93,7 @@ namespace PICodeFirst.GoToTheCloud.Infrastructure.Db.Sql {
         ///FROM Travels t
         ///INNER JOIN Locations lf ON (lf.id = t.location_from_id)
         ///INNER JOIN Locations lt ON (lt.id = t.location_to_id)
-        ///--WHERE t.user_id LIKE &apos;@user_id&apos;.
+        ///.
         /// </summary>
         internal static string GetTravelList {
             get {

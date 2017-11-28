@@ -1,0 +1,55 @@
+﻿@model TravelViewModel
+@{
+    ViewData["Title"] = "Add new Travel";
+}
+
+<style>
+    .row > div {
+        margin: 4px;
+    }
+</style>
+
+<h2>New Travel</h2>
+
+<form asp-controller="Home" asp-action="AddNew" method="post">
+    <div class="panel panel-default">
+        <div class="panel-heading">Add new Travel</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2"><label asp-for="Description" class="control-label"></label></div>
+                <div class="col-md-3"><input asp-for="Description" class="form-control" /></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label asp-for="Start" class="control-label"></label></div>
+                <div class="col-md-3"><input asp-for="Start" asp-format="{0:dd-MM-yyyy}" class="form-control" /></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label asp-for="Finish" class="control-label"></label></div>
+                <div class="col-md-3"><input asp-for="Finish" asp-format="{0:dd-MM-yyyy}" class="form-control" /></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label asp-for="FromId" class="control-label"></label></div>
+                <div class="col-md-3">
+                    <select asp-for="FromId" class="form-control">
+                        @foreach (var l in Model.Locations)
+                        {
+                            <option value="@l.Id">@l.Name </option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label asp-for="ToId" class="control-label"></label></div>
+                <div class="col-md-3">
+                    <select asp-for="ToId" class="form-control">
+                        @foreach (var l in Model.Locations)
+                        {
+                            <option value="@l.Id">@l.Name </option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer"><button type="submit" class="btn btn-primary">Save travel</button></div>
+    </div>
+</form>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PIcodeFirst.GoToTheCloud.FrontEnd.Authorization;
 using PICodeFirst.GoToTheCloud.App.TravelModel;
 using PIcodeFirst.GoToTheCloud.FrontEnd.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PIcodeFirst.GoToTheCloud.FrontEnd.Controllers
 {
@@ -28,6 +29,38 @@ namespace PIcodeFirst.GoToTheCloud.FrontEnd.Controllers
             }
 
             return View(travelsViewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AddNew()
+        {
+            return View(new TravelViewModel()
+            {
+                Description = string.Empty,
+                Start = DateTime.Now,
+                Finish = DateTime.Now,
+                Locations = _travelRepository.GetAllLocations()
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult AddNew(TravelViewModel travelView)
+        {
+            var travel = new Travel()
+            {
+                Id = Guid.NewGuid(),
+                Description = travelView.Description,
+                Start = travelView.Start,
+                Finish = travelView.Finish,
+                From = new Location() { Id = travelView.FromId },
+                To = new Location() { Id = travelView.ToId }
+            };
+
+            _travelRepository.AddTravel(travel, User.CreateUser());
+
+            return RedirectToAction("Index");
         }
     }
 }

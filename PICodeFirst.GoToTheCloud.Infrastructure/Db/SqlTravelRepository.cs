@@ -11,9 +11,53 @@ namespace PICodeFirst.GoToTheCloud.Infrastructure.Db
 {
     public class SqlTravelRepository : SqlRepositoryBase, ITravelRepository
     {
+        #region ctor
         public SqlTravelRepository(ConnectionStrings connectionStrings ) : base(connectionStrings)
         {
             
+        }
+        #endregion
+
+        public void AddTravel(Travel travel, User user)
+        {
+            using(var connection = GetConnection())
+            {
+                var command = new SqlCommand(SqlTravelRepositoryQueries.AddTravel, connection);
+
+                command.Parameters.AddWithValue("id", travel.Id);
+                command.Parameters.AddWithValue("description", travel.Description);
+                command.Parameters.AddWithValue("start", travel.Start);
+                command.Parameters.AddWithValue("finish", travel.Finish);
+                command.Parameters.AddWithValue("user_id", user.Name);
+                command.Parameters.AddWithValue("location_from_id", travel.From.Id);
+                command.Parameters.AddWithValue("location_to_id", travel.To.Id);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public IEnumerable<Location> GetAllLocations()
+        {
+            var result = new List<Location>();
+
+            using (var connection = GetConnection())
+            {
+                var command = new SqlCommand(SqlTravelRepositoryQueries.GetLocations, connection);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        result.Add(new Location()
+                        {
+                            Id = reader.GetGuidOrDefault("id"),
+                            Name = reader.GetStringOrDefault("name")
+                        });
+                    }
+                }
+            }
+
+            return result;
         }
 
         public IEnumerable<Travel> GetTravelList(User user)
