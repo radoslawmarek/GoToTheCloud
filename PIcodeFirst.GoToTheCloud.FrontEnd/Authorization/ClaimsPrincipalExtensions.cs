@@ -12,6 +12,16 @@ namespace PIcodeFirst.GoToTheCloud.FrontEnd.Authorization
     {
         private static AzureAdGroupsOptions _options;
 
+        public static Guid GetApplicationAdminGroupId()
+        {
+            if (_options == null || string.IsNullOrEmpty(_options.AppAdministratorGroupId))
+            {
+                return Guid.Empty;
+            }
+
+            return Guid.Parse(_options.AppAdministratorGroupId);
+        }
+
         public static User CreateUser(this ClaimsPrincipal claimsPrincipal)
         {
             var userGroups = new List<Group>();
@@ -19,6 +29,7 @@ namespace PIcodeFirst.GoToTheCloud.FrontEnd.Authorization
             var claims = user.Claims;
             var firstName = claims.FirstOrDefault(c => c.Type.EndsWith("givenname"))?.Value ?? string.Empty;
             var lastName = claims.FirstOrDefault(c => c.Type.EndsWith("surname"))?.Value ?? string.Empty;
+            var id = claims.FirstOrDefault(c => c.Type.EndsWith("objectidentifier"))?.Value ?? string.Empty;
 
             var groupGuids = claims.Where(c => c.Type == "groups").ToList();
             if (groupGuids != null)
@@ -36,7 +47,7 @@ namespace PIcodeFirst.GoToTheCloud.FrontEnd.Authorization
                 }
             }
 
-            var result =  new User()
+            var result =  new User(Guid.Parse(id))
             {
                 Name = user.Name,
                 FirstName = firstName,

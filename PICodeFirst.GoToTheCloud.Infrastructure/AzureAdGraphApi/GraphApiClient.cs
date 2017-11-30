@@ -7,15 +7,22 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PICodeFirst.GoToTheCloud.Infrastructure.AzureAdGraphApi
 {
     public class GraphApiClient
     {
+<<<<<<< HEAD
         private string _clientId = "";
         private string _clientSecret = "";
         private string _organizationId = "";
+=======
+        private string _clientId = string.Empty;
+        private string _clientSecret = string.Empty;
+        private string _organizationId = string.Empty;
+>>>>>>> Application administrator group is checked with Azure AD Graph API
 
         private AuthenticationContext _authContext = null;
         private ClientCredential _clientCredential = null;
@@ -30,7 +37,7 @@ namespace PICodeFirst.GoToTheCloud.Infrastructure.AzureAdGraphApi
             _clientCredential = new ClientCredential(clientId, clientSecret);
         }
 
-        public async Task<string> SendRequest(string api, string query)
+        public async Task<string> SendRequest(string api, string query, string content = "")
         {
             var graphApiVersion = "api-version=1.6";
 
@@ -42,6 +49,11 @@ namespace PICodeFirst.GoToTheCloud.Infrastructure.AzureAdGraphApi
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authResult.AccessToken);
+            if (!string.IsNullOrEmpty(content))
+            {
+                request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+            }
+            
             HttpResponseMessage response = await http.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -52,6 +64,17 @@ namespace PICodeFirst.GoToTheCloud.Infrastructure.AzureAdGraphApi
             }
 
             return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<bool> IsUserInGroup(string memberId, string groupId)
+        {
+            var content = $"{{ \"groupId\" : \"{groupId}\", \"memberId\" : \"{memberId}\" }}";
+
+            var response = await SendRequest("isMemberOf", string.Empty, content);
+
+            var result = JsonConvert.DeserializeObject<GraphIsMemberOf>(response);
+
+            return result.Value;
         }
 
         public async Task<IEnumerable<GraphGroup>> GetAllGroups()

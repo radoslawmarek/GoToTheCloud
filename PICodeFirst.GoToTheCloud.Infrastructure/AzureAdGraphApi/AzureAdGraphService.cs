@@ -1,4 +1,5 @@
-﻿using PICodeFirst.GoToTheCloud.App.Configurations;
+﻿using Newtonsoft.Json;
+using PICodeFirst.GoToTheCloud.App.Configurations;
 using PICodeFirst.GoToTheCloud.App.UserModel;
 using PICodeFirst.GoToTheCloud.Infrastructure.AzureAdGraphApi.GraphApiModel;
 using System;
@@ -39,6 +40,13 @@ namespace PICodeFirst.GoToTheCloud.Infrastructure.AzureAdGraphApi
             }
 
             return result;
+        }
+
+        public async Task<bool> IsUserInGroup(User user, Guid groupId)
+        {
+            var client = new GraphApiClient(_azureGraphCredentials.OrganizationId, _azureGraphCredentials.AppId, _azureGraphCredentials.ClientSecret);
+
+            return await client.IsUserInGroup(user.Id.ToString(), groupId.ToString());
         }
     }
 }
