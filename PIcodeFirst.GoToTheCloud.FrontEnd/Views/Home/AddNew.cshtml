@@ -21,11 +21,11 @@
             </div>
             <div class="row">
                 <div class="col-md-2"><label asp-for="Start" class="control-label"></label></div>
-                <div class="col-md-3"><input asp-for="Start" asp-format="{0:dd-MM-yyyy}" class="form-control" /></div>
+                <div class="col-md-3"><input asp-for="Start" class="form-control" /></div>
             </div>
             <div class="row">
                 <div class="col-md-2"><label asp-for="Finish" class="control-label"></label></div>
-                <div class="col-md-3"><input asp-for="Finish" asp-format="{0:dd-MM-yyyy}" class="form-control" /></div>
+                <div class="col-md-3"><input asp-for="Finish" class="form-control" /></div>
             </div>
             <div class="row">
                 <div class="col-md-2"><label asp-for="FromId" class="control-label"></label></div>
@@ -50,6 +50,24 @@
                 </div>
             </div>
         </div>
-        <div class="panel-footer"><button type="submit" class="btn btn-primary">Save travel</button></div>
+
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-primary">Save travel</button>
+            <a asp-action="Index" class="btn btn-primary">Return to list</a>
+        </div>
     </div>
 </form>
+@if (Model.Errors?.Any() ?? false)
+{
+    <div class="row">
+        @foreach (var validationError in Model.Errors)
+        {
+            <div class="alert alert-warning">
+                <strong>Warning!</strong> @validationError
+            </div>
+
+        }
+    </div>
+
+}
+

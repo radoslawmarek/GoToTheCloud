@@ -48,6 +48,17 @@ namespace PIcodeFirst.GoToTheCloud.FrontEnd.Controllers
         [Authorize]
         public IActionResult AddNew(TravelViewModel travelView)
         {
+            if (!ModelState.IsValid)
+            {
+                travelView.Locations = _travelRepository.GetAllLocations();
+                travelView.Errors = new List<string>(ModelState.Values
+                    .SelectMany(s => s.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .Distinct());
+                
+                return View(travelView);
+            }
+
             var travel = new Travel()
             {
                 Id = Guid.NewGuid(),
