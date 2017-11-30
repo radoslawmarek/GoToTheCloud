@@ -13,9 +13,9 @@ namespace PICodeFirst.GoToTheCloud.Infrastructure.AzureAdGraphApi
 {
     public class GraphApiClient
     {
-        private string _clientId = "747c1ed6-f45b-4e12-80e2-bd3d32e00eb0";
-        private string _clientSecret = "7e+nA5Z5EkMbhZRxU2CAlULu2VABm1QISOQfXAT/Vg8=";
-        private string _organizationId = "ea817d65-4bbd-4d79-a882-eff2c5ffe530";
+        private string _clientId = "";
+        private string _clientSecret = "";
+        private string _organizationId = "";
 
         private AuthenticationContext _authContext = null;
         private ClientCredential _clientCredential = null;
