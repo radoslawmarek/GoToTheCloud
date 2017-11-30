@@ -14,15 +14,9 @@ namespace PICodeFirst.GoToTheCloud.Infrastructure.AzureAdGraphApi
 {
     public class GraphApiClient
     {
-<<<<<<< HEAD
-        private string _clientId = "";
-        private string _clientSecret = "";
-        private string _organizationId = "";
-=======
         private string _clientId = string.Empty;
         private string _clientSecret = string.Empty;
         private string _organizationId = string.Empty;
->>>>>>> Application administrator group is checked with Azure AD Graph API
 
         private AuthenticationContext _authContext = null;
         private ClientCredential _clientCredential = null;
