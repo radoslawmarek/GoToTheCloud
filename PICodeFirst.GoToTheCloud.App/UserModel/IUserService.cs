@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PICodeFirst.GoToTheCloud.App.UserModel
 {
-    public class Group
+    public interface IUserService
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        Task<IEnumerable<Group>> GetAllGroups();
     }
 }

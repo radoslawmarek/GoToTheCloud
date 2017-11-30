@@ -10,6 +10,8 @@ using PIcodeFirst.GoToTheCloud.FrontEnd.Authorization;
 using PIcodeFirst.GoToTheCloud.FrontEnd.Configuration;
 using PICodeFirst.GoToTheCloud.App.Configurations;
 using PICodeFirst.GoToTheCloud.App.TravelModel;
+using PICodeFirst.GoToTheCloud.App.UserModel;
+using PICodeFirst.GoToTheCloud.Infrastructure.AzureAdGraphApi;
 using PICodeFirst.GoToTheCloud.Infrastructure.Db;
 using System;
 
@@ -40,11 +42,11 @@ namespace PIcodeFirst.GoToTheCloud.FrontEnd
             .AddCookie();
 
             services.Configure<AzureAdGroupsOptions>(Configuration.GetSection("AdGroups"));
-            //services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
-            //var connectionStringsOptions = Configuration.GetSection("ConnectionStrings");
             services.AddSingleton<ConnectionStrings>(Configuration.GetConnectionStrings());
+            services.AddSingleton<UserApiCredentials>(Configuration.GetUserApiCredentials());
 
             services.AddTransient<ITravelRepository, SqlTravelRepository>();
+            services.AddTransient<IUserService, AzureAdGraphService>();
 
             services.AddMvc();
                 

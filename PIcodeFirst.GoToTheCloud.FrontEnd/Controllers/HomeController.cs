@@ -7,19 +7,23 @@ using PIcodeFirst.GoToTheCloud.FrontEnd.Authorization;
 using PICodeFirst.GoToTheCloud.App.TravelModel;
 using PIcodeFirst.GoToTheCloud.FrontEnd.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using PICodeFirst.GoToTheCloud.Infrastructure.AzureAdGraphApi;
+using PICodeFirst.GoToTheCloud.App.UserModel;
 
 namespace PIcodeFirst.GoToTheCloud.FrontEnd.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ITravelRepository _travelRepository;
+        private readonly IUserService _userService;
 
-        public HomeController(ITravelRepository travelRepository)
+        public HomeController(ITravelRepository travelRepository, IUserService userService)
         {
             _travelRepository = travelRepository;
+            _userService = userService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var travelsViewModel = new TravelsViewModel();
             if (User.Identity.IsAuthenticated)
@@ -27,6 +31,11 @@ namespace PIcodeFirst.GoToTheCloud.FrontEnd.Controllers
                 travelsViewModel.Travels = _travelRepository.GetTravelList(User.CreateUser());
                 travelsViewModel.IsAuthenticated = true;
             }
+
+            //var graphApiClient = new GraphApiClient();
+            //var result = await graphApiClient.SendRequest("groups", string.Empty);
+            var groups = await _userService.GetAllGroups();
+
 
             return View(travelsViewModel);
         }
